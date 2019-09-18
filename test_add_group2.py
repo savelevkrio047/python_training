@@ -1,19 +1,29 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 import unittest, time, re
+from group import Group
 
-class UntitledTestCase(unittest.TestCase):
+class test_add_group(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
     
-    def test_untitled_test_case(self):
+    def test_add_group(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd)
+        self.login(wd, username="admin", password="secret")
         self.open_groups_page(wd)
-        self.create_group(wd)
+        self.create_group(wd, Group(name="123123", header="123123", footer="123123"))
+        self.return_to_group_page(wd)
+        self.log_out(wd)
+
+    def test_add_empty_group(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_groups_page(wd)
+        self.create_group(wd, Group(name="", header="", footer=""))
         self.return_to_group_page(wd)
         self.log_out(wd)
 
@@ -27,19 +37,19 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Groups'])[1]/following::form[1]").click()
 
-    def create_group(self, wd):
+    def create_group(self, wd, group):
         # приступаем к созданию новой группы
         wd.find_element_by_name("new").click()
         # заполнение формы создания группы
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys("123123")
+        wd.find_element_by_name("group_name").send_keys(group.name)
         wd.find_element_by_name("group_header").click()
         wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys("123123")
+        wd.find_element_by_name("group_header").send_keys(group.header)
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys("123123")
+        wd.find_element_by_name("group_footer").send_keys(group.footer)
         # Сохраняем новую форму
         wd.find_element_by_name("submit").click()
 
@@ -47,13 +57,13 @@ class UntitledTestCase(unittest.TestCase):
         # открываем страницу с группами
         wd.find_element_by_link_text("groups").click()
 
-    def login(self, wd):
+    def login(self, wd, username, password):
         # логин
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self, wd):
