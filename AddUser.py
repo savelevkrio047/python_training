@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 from test_add_group2 import test_add_group
 from contact import Contact
+from test_add_group2 import test_add_group
 class AddUser(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
@@ -16,16 +17,13 @@ class AddUser(unittest.TestCase):
     
     def test_add_user(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_add_contact_form(wd)
         self.create_contact(wd, Contact(firstname=u"Геннадий1", secondname=u"Николаевич1", surname=u"Савельев1", nickname="Geksa", title=u"График оплаты", company=u"ЭФтеъ",
                             address=u"Пушкина 11 а кв 4", home="123", mobile= "123321", work=u"работа", email="qwe@ewq.uq"))
         self.log_out(wd)
 
     def test_add_empty_user(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_add_contact_form(wd)
         self.create_contact(wd, Contact(firstname="", secondname="", surname="",
@@ -39,6 +37,7 @@ class AddUser(unittest.TestCase):
 
     def create_contact(self, wd, contact):
         # fill contact form
+        self.open_add_contact_form(wd)
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -117,12 +116,14 @@ class AddUser(unittest.TestCase):
         # submit contact creation
         wd.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]").click()
-
+        self.open_home_page(wd)
+        # self.open_home_page(wd)
     def open_add_contact_form(self, wd):
         # open add_contact form
         wd.find_element_by_link_text("add new").click()
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)

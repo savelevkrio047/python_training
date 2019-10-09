@@ -11,25 +11,20 @@ class test_add_group(unittest.TestCase):
     
     def test_add_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
         self.create_group(wd, Group(name="123123", header="123123", footer="123123"))
-        self.return_to_group_page(wd)
         self.log_out(wd)
-        self.login(wd, "123", "321")
+
 
     def test_add_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
         self.create_group(wd, Group(name="", header="", footer=""))
-        self.return_to_group_page(wd)
         self.log_out(wd)
 
     def log_out(self, wd):
         # выход из приложения
+        # wd.find_element_by_link_text("Logout").click()
         wd.find_element_by_link_text("Logout").click()
 
     def return_to_group_page(self, wd):
@@ -53,20 +48,21 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # Сохраняем новую форму
         wd.find_element_by_name("submit").click()
-
+        self.return_to_group_page(wd)
     def open_groups_page(self, wd):
         # открываем страницу с группами
         wd.find_element_by_link_text("groups").click()
 
     def login(self, wd, username, password):
         # логин
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
-
+        self.open_groups_page(wd)
     def open_home_page(self, wd):
         # открытие главной страницы
         wd.get("http://localhost/addressbook/")
@@ -75,13 +71,7 @@ class test_add_group(unittest.TestCase):
         try: self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
-    
-    def is_alert_present(self):
-        try: self.wd.switch_to_alert()
-        except NoAlertPresentException as e: return False
-        return True
 
-    
     def tearDown(self):
         self.wd.quit()
 
