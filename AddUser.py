@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 from test_add_group2 import test_add_group
+from contact import Contact
 class AddUser(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
@@ -18,8 +19,8 @@ class AddUser(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_add_contact_form(wd)
-        self.create_contact(wd, firstname=u"Геннадий1", secondname=u"Николаевич1", surname=u"Савельев1", nickname="Geksa", title=u"График оплаты", company=u"ЭФтеъ",
-                            address=u"Пушкина 11 а кв 4", home="123",mobile= "123321", work=u"работа", email="qwe@ewq.uq")
+        self.create_contact(wd, Contact(firstname=u"Геннадий1", secondname=u"Николаевич1", surname=u"Савельев1", nickname="Geksa", title=u"График оплаты", company=u"ЭФтеъ",
+                            address=u"Пушкина 11 а кв 4", home="123", mobile= "123321", work=u"работа", email="qwe@ewq.uq"))
         self.log_out(wd)
 
     def test_add_empty_user(self):
@@ -27,52 +28,51 @@ class AddUser(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.open_add_contact_form(wd)
-        self.create_contact(wd, firstname="", secondname="", surname="",
+        self.create_contact(wd, Contact(firstname="", secondname="", surname="",
                             nickname="", title="", company="",
                             address="", home="", mobile="", work="",
-                            email="")
+                            email=""))
         self.log_out(wd)
 
     def log_out(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd, firstname, secondname, surname, nickname, title, company, address, home, mobile, work,
-                       email):
+    def create_contact(self, wd, contact):
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(firstname)
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
         wd.find_element_by_name("middlename").click()
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(secondname)
+        wd.find_element_by_name("middlename").send_keys(contact.secondname)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(surname)
+        wd.find_element_by_name("lastname").send_keys(contact.surname)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys(nickname)
+        wd.find_element_by_name("nickname").send_keys(contact.nickname)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(title)
+        wd.find_element_by_name("title").send_keys(contact.title)
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(company)
+        wd.find_element_by_name("company").send_keys(contact.company)
         wd.find_element_by_name("company").clear()
         wd.find_element_by_name("company").send_keys(u"ЭФтех")
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(address)
+        wd.find_element_by_name("address").send_keys(contact.address)
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(home)
+        wd.find_element_by_name("home").send_keys(contact.home)
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(mobile)
+        wd.find_element_by_name("mobile").send_keys(contact.mobile)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(work)
+        wd.find_element_by_name("work").send_keys(contact.work)
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("fax").clear()
@@ -80,7 +80,7 @@ class AddUser(unittest.TestCase):
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(email)
+        wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_name("email2").clear()
         wd.find_element_by_name("email2").send_keys("qwe@ewq.uq")
         wd.find_element_by_name("email3").clear()
