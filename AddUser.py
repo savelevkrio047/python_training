@@ -16,50 +16,63 @@ class AddUser(unittest.TestCase):
     def test_add_user(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd)
+        self.login(wd, username="admin", password="secret")
         self.open_add_contact_form(wd)
-        self.create_contact(wd)
+        self.create_contact(wd, firstname=u"Геннадий1", secondname=u"Николаевич1", surname=u"Савельев1", nickname="Geksa", title=u"График оплаты", company=u"ЭФтеъ",
+                            address=u"Пушкина 11 а кв 4", home="123",mobile= "123321", work=u"работа", email="qwe@ewq.uq")
+        self.log_out(wd)
+
+    def test_add_empty_user(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.open_add_contact_form(wd)
+        self.create_contact(wd, firstname="", secondname="", surname="",
+                            nickname="", title="", company="",
+                            address="", home="", mobile="", work="",
+                            email="")
         self.log_out(wd)
 
     def log_out(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd):
+    def create_contact(self, wd, firstname, secondname, surname, nickname, title, company, address, home, mobile, work,
+                       email):
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(u"Геннадий1")
+        wd.find_element_by_name("firstname").send_keys(firstname)
         wd.find_element_by_name("middlename").click()
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(u"Николаевич1")
+        wd.find_element_by_name("middlename").send_keys(secondname)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(u"Савельев1")
+        wd.find_element_by_name("lastname").send_keys(surname)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
-        wd.find_element_by_name("nickname").send_keys("Geksa")
+        wd.find_element_by_name("nickname").send_keys(nickname)
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
-        wd.find_element_by_name("title").send_keys(u"График оплаты")
+        wd.find_element_by_name("title").send_keys(title)
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(u"ЭФтеъ")
+        wd.find_element_by_name("company").send_keys(company)
         wd.find_element_by_name("company").clear()
         wd.find_element_by_name("company").send_keys(u"ЭФтех")
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(u"Пушкина 11 а кв 4")
+        wd.find_element_by_name("address").send_keys(address)
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys("123")
+        wd.find_element_by_name("home").send_keys(home)
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("123321")
+        wd.find_element_by_name("mobile").send_keys(mobile)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
-        wd.find_element_by_name("work").send_keys(u"работа")
+        wd.find_element_by_name("work").send_keys(work)
         wd.find_element_by_name("fax").click()
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("fax").clear()
@@ -67,7 +80,7 @@ class AddUser(unittest.TestCase):
         wd.find_element_by_name("theform").click()
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys("qwe@ewq.uq")
+        wd.find_element_by_name("email").send_keys(email)
         wd.find_element_by_name("email2").clear()
         wd.find_element_by_name("email2").send_keys("qwe@ewq.uq")
         wd.find_element_by_name("email3").clear()
@@ -109,13 +122,13 @@ class AddUser(unittest.TestCase):
         # open add_contact form
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd):
+    def login(self, wd, username, password):
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self, wd):
