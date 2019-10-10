@@ -16,28 +16,28 @@ class AddUser(unittest.TestCase):
 
     
     def test_add_user(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(firstname=u"Геннадий1", secondname=u"Николаевич1", surname=u"Савельев1", nickname="Geksa", title=u"График оплаты", company=u"ЭФтеъ",
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(firstname=u"Геннадий1", secondname=u"Николаевич1", surname=u"Савельев1", nickname="Geksa", title=u"График оплаты", company=u"ЭФтеъ",
                             address=u"Пушкина 11 а кв 4", home="123", mobile= "123321", work=u"работа", email="qwe@ewq.uq"))
-        self.log_out(wd)
+        self.log_out()
 
     def test_add_empty_user(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.open_add_contact_form(wd)
-        self.create_contact(wd, Contact(firstname="", secondname="", surname="",
+        self.login(username="admin", password="secret")
+        self.open_add_contact_form()
+        self.create_contact(Contact(firstname="", secondname="", surname="",
                             nickname="", title="", company="",
                             address="", home="", mobile="", work="",
                             email=""))
-        self.log_out(wd)
+        self.log_out()
 
-    def log_out(self, wd):
+    def log_out(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
-    def create_contact(self, wd, contact):
+    def create_contact(self, contact):
         # fill contact form
-        self.open_add_contact_form(wd)
+        wd = self.wd
+        self.open_add_contact_form()
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -116,14 +116,16 @@ class AddUser(unittest.TestCase):
         # submit contact creation
         wd.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]").click()
-        self.open_home_page(wd)
+        self.open_home_page()
         # self.open_home_page(wd)
-    def open_add_contact_form(self, wd):
+    def open_add_contact_form(self):
         # open add_contact form
+        wd = self.wd
         wd.find_element_by_link_text("add new").click()
 
-    def login(self, wd, username, password):
-        self.open_home_page(wd)
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -132,11 +134,13 @@ class AddUser(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
         # Open home page
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
+        wd = self.wd
         try: self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
