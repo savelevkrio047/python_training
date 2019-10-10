@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
-from test_add_group2 import test_add_group
+import unittest
 from contact import Contact
-from test_add_group2 import test_add_group
+
+
 class AddUser(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()

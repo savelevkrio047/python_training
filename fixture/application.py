@@ -60,5 +60,7 @@ class Application:
         # открытие главной страницы
         wd = self.wd
         wd.get("http://localhost/addressbook/")
+
     def destroy(self):
+        wd = self.wd
         self.wd.quit()
