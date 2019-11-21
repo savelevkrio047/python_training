@@ -12,6 +12,7 @@ class GroupHelper:
         self.open_groups_page()
         # приступаем к созданию новой группы
         wd = self.app.wd
+        self.open_groups_page()
         wd.find_element_by_name("new").click()
         # заполнение формы создания группы
         wd.find_element_by_name("group_name").click()
@@ -31,3 +32,10 @@ class GroupHelper:
         # открываем страницу с группами
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
+    def delete_first_group(self):
+        #Delete first user
+        wd = self.app.wd
+        self.open_groups_page()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_name("delete").click()
+        self.app.open_home_page()

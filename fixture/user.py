@@ -1,4 +1,5 @@
-
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
 
 class UserHelper:
     def __init__(self, app):
@@ -9,6 +10,16 @@ class UserHelper:
         # open add_contact form
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
+
+
+    def delete_first_user(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+
+
 
 
     def create(self, contact):
