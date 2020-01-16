@@ -7,6 +7,13 @@ from fixture.user import UserHelper
 
 class Application:
 
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
+
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
