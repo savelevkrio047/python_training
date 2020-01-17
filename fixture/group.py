@@ -23,7 +23,7 @@ class GroupHelper:
     def return_to_group_page(self):
         # Проверяем наличие созданной группы
         wd = self.app.wd
-        wd.find_element_by_link_text("group page").click()
+        wd.find_element_by_link_text("groups").click()
         wd.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Groups'])[1]/following::form[1]").click()
 
     def create(self, group):
@@ -68,3 +68,9 @@ class GroupHelper:
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
+    def count(self):
+        wd = self.app.wd
+        self.return_to_group_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+
