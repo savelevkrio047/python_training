@@ -9,7 +9,6 @@ from fixture.application import Application
 
     
 def test_add_user(app):
-    app.session.login(username="admin", password="secret")
     app.user.create(Contact(
         firstname=u"Геннадий1",
         secondname=u"Николаевич1",
@@ -21,13 +20,12 @@ def test_add_user(app):
         home="123", mobile="123321",
         work=u"работа",
         email="qwe@ewq.uq"))
-    app.session.log_out()
+
 
 def test_add_empty_user(app):
-    app.session.login(username="admin", password="secret")
+
     app.user.open_add_contact_form()
     app.user.create(Contact(firstname="", secondname="", surname="",
                             nickname="", title="", company="",
                             address="", home="", mobile="", work="",
                             email=""))
-    app.session.log_out()

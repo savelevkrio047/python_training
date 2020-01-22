@@ -69,7 +69,8 @@ class GroupHelper:
 
     def select_first_group(self):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("/html/body/div/div[4]/form/span/input").click()
+
     def count(self):
         wd = self.app.wd
         self.return_to_group_page()

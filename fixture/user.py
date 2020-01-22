@@ -19,9 +19,48 @@ class UserHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
 
+    def open_users_page(self):
+        wd = self.app.wd
+        #self.app.open_home_page()
+        wd.find_element_by_xpath("/html/body/div/div[3]/ul/li[1]/a").click()
 
+    def modify_first_user(self, new_group_data):
+        wd = self.app.wd
+        self.open_users_page()
+        self.select_first_group()
+        #open modif form
+        wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[2]/td[8]/a/img").click()
+        #fill form
+        self.fill_user_form(new_group_data)
+        #submit modification
+        wd.find_element_by_name("update").click()
+        self.open_users_page()
 
+    def select_first_group(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
 
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def fill_user_form(self, contact):
+        wd = self.app.wd
+        # заполнение формы создания rконтакта
+        self.change_field_value("firstname", contact.firstname)
+        self.change_field_value("middlename", contact.secondname)
+        self.change_field_value("lastname", contact.surname)
+        self.change_field_value("nickname", contact.nickname)
+        self.change_field_value("title", contact.title)
+        self.change_field_value("company", contact.company)
+        self.change_field_value("address", contact.address)
+        self.change_field_value("home", contact.home)
+        self.change_field_value("mobile", contact.mobile)
+        self.change_field_value("work", contact.work)
+        self.change_field_value("email", contact.email)
     def create(self, contact):
         # fill contact form
         wd = self.app.wd
@@ -106,3 +145,7 @@ class UserHelper:
         #wd.app.open_home_page()
         # self.open_home_page(wd)
 
+    def count(self):
+        wd = self.app.wd
+        self.open_users_page()
+        return len(wd.find_elements_by_name("selected[]"))
