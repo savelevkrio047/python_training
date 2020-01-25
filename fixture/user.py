@@ -1,5 +1,6 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from  model.contact import Contact
 
 class UserHelper:
     def __init__(self, app):
@@ -18,7 +19,7 @@ class UserHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
-
+        self.user_cache = None
     def open_users_page(self):
         wd = self.app.wd
         #self.app.open_home_page()
@@ -35,6 +36,7 @@ class UserHelper:
         #submit modification
         wd.find_element_by_name("update").click()
         self.open_users_page()
+        self.user_cache = None
 
     def select_first_group(self):
         wd = self.app.wd
@@ -144,8 +146,36 @@ class UserHelper:
             "(.//*[normalize-space(text()) and normalize-space(.)='Notes:'])[1]/following::input[1]").click()
         #wd.app.open_home_page()
         # self.open_home_page(wd)
+        self.user_cache = None
+
+    user_cache = None
 
     def count(self):
         wd = self.app.wd
         self.open_users_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_user_list(self):
+        if self.user_cache is None:
+            wd = self.app.wd
+            self.open_users_page()
+            self.user_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.user_cache.append(Contact(firstname=text, id=id))
+
+        return list(self.user_cache)
+
+    def delete_user_by_index(self, index):
+        #Delete first user
+        wd = self.app.wd
+        self.open_users_page()
+        self.select_user_by_index(index)
+        wd.find_element_by_xpath("/html/body/div/div[4]/form[2]/div[2]/input").click()
+        #self.open_users_page()
+        self.group_cache = None
+
+    def select_user_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()

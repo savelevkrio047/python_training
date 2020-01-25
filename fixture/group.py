@@ -104,6 +104,7 @@ class GroupHelper:
     group_cache = None
 
 
+
     def get_group_list(self):
         if self.group_cache is None:
             wd = self.app.wd
