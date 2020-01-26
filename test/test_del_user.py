@@ -25,5 +25,8 @@ def test_delete_some_group(app):
     new_users =  app.user.get_user_list()
    # assert len(old_users) - 1 == len(new_users)
    # old_users[index:index + 1] = []
+    for i in new_users:
+        if not (i in old_users):
+            old_users.append(i)
     assert old_users == new_users
 
