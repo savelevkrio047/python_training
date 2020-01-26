@@ -11,8 +11,8 @@ from fixture.application import Application
 def test_add_user(app):
     old_users = app.user.get_user_list()
     user = Contact(
-        firstname="Геннадий1",
         lastname="Савельев1",
+        firstname="Геннадий1",
         homephone="4302014",
         mobilephone="89200101840",
         workphone="89087380653",
