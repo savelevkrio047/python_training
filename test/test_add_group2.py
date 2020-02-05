@@ -3,8 +3,8 @@ import pytest
 from model.group import Group
 
 
-def test_add_group2(app, data_groups):
-        group = data_groups
+def test_add_group2(app, json_groups):
+        group = json_groups
         old_groups = app.group.get_group_list()
        # group = Group(name="surmame", header="123123", footer="123123")
         app.group.create(group)
