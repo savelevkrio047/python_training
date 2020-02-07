@@ -10,7 +10,10 @@ def test_add_group2(app, json_groups):
         app.group.create(group)
         assert len(old_groups) + 1 == app.group.count()
         new_groups = app.group.get_group_list()
-        old_groups.append(group)
+        for i in new_groups:
+                if not (i in old_groups):
+                        old_groups.append(i)
+
         assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
