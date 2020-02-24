@@ -6,9 +6,13 @@
           <option name="url" value="https://github.com/savelevkrio047/python_training.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="git.fabrikant.ru:pytest-autotest/pytest_framework.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="C:\Users\user" />
+    <option name="cloneParentDir" value="C:\Users\user\PycharmProjects" />
   </component>
   <component name="Vcs.Log.App.Settings">
     <option name="COLUMN_ORDER">
