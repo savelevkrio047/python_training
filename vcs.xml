@@ -30,9 +30,13 @@
           <option name="url" value="https://git.fabrikant.ru/automation-and-quality/notification-bot.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://git.fabrikant.ru/automation-and-quality/pytest_framework.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="C:\Users\user\PycharmProjects" />
+    <option name="cloneParentDir" value="C:\Users\user\PycharmProjects\pytest_framework" />
   </component>
   <component name="Vcs.Log.App.Settings">
     <option name="SHOW_CHANGES_FROM_PARENTS" value="true" />
